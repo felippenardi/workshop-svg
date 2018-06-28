@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "react-lottie": "^1.2.3",
     "react-swipeable-views": "^0.12.14"
   }
 }
