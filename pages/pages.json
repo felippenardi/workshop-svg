@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "welcome": {
+      "path": "/welcome"
+    }
+  },
+  "extensions": {
+    "welcome": {
+      "component": "index"
+    }
+  }
+}
