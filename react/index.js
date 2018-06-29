@@ -25,11 +25,43 @@ export default class Welcome extends Component {
     progress: 0,
     percentage: 0,
     isStopped: false,
-    isPaused: true,
+    isPaused: false,
+    segment: [0,10],
   }
+
+
+  handleChangeIndex = (index) => {
+    console.log('largou')
+    // this.setState({
+    //   isPaused: false,
+    //   segment: [1, 50],
+    // })
+  }
+
   handleSwitching = (index, type) => {
+    console.log(index, progress)
     const progress = Math.trunc(index * 100) % 100
-    this.setState({ progress, percentage: progress / 100 })
+
+    if (index === 1) {
+      this.setState({
+        isPaused: false,
+        segment: [10, 20],
+      })
+      return
+    }
+    if (index === 2) {
+      this.setState({
+        isPaused: false,
+        segment: [20, 50],
+      })
+      return
+    }
+
+    this.setState({
+      isPaused: true,
+      progress,
+      percentage: progress / 100,
+    })
   }
 
   handleChangePercentage = (e) => {
@@ -61,6 +93,7 @@ export default class Welcome extends Component {
           <LottieWithAnimationControl options={defaultOptions}
             height={400}
             width={400}
+            segments={null}
             percentage={this.state.percentage}
             isStopped={this.state.isStopped}
             isPaused={this.state.isPaused}
@@ -70,6 +103,7 @@ export default class Welcome extends Component {
         <SwipeableViews
           enableMouseEvents={true}
           onSwitching={this.handleSwitching}
+          onTransitionEnd={this.handleChangeIndex}
         >
           <div style={Object.assign({}, styles.slide, styles.slide1)}>
             slide n°1
