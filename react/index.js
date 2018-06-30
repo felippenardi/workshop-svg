@@ -6,7 +6,7 @@ import * as atmAnimation from './assets/atm-animation.json'
 const styles = {
   slide: {
     padding: 15,
-    minHeight: 500,
+    height: '100vh',
     color: '#fff',
   },
   slide1: {
@@ -32,36 +32,25 @@ export default class Welcome extends Component {
     this.setState({ isPaused: false })
   }
 
-  handleSwitching = (index, type) => {
-    if (index === 0) {
-      this.setState((state) => {
-        return {
-          startPosition: state.endPosition,
-          direction: state.endPosition < 21 ? 1 : -1,
-          endPosition: 21,
-        }
-      })
-      return
+  handleChangeIndex = (index) => {
+    const animationEndPositionByIndex = {
+      0: 21,
+      1: 35,
+      2: 60,
     }
-    if (index === 1) {
-      this.setState((state) => {
+
+    const goToPosition = (position) => {
+      return this.setState((state) => {
         return {
           startPosition: state.endPosition,
-          direction: state.endPosition < 35 ? 1 : -1,
-          endPosition: 35,
+          direction: state.endPosition < position ? 1 : -1,
+          endPosition: position,
         }
       })
-      return
     }
-    if (index === 2) {
-      this.setState((state) => {
-        return {
-          startPosition: state.endPosition,
-          direction: state.endPosition < 60 ? 1 : -1,
-          endPosition: 60,
-        }
-      })
-      return
+
+    if (animationEndPositionByIndex[index]) {
+      goToPosition(animationEndPositionByIndex[index])
     }
   }
 
@@ -84,28 +73,28 @@ export default class Welcome extends Component {
       <div>
         <div className="absolute z-999 ma7" style={ { pointerEvents: 'none' } }>
           <LottieWithAnimationControl options={defaultOptions}
-            height={400}
-            width={400}
             direction={this.state.direction}
             segments={[this.state.startPosition, this.state.endPosition]}
             forceSegments={true}
             isPaused={this.state.isPaused}
           />
         </div>
-        <SwipeableViews
-          enableMouseEvents={true}
-          onSwitching={this.handleSwitching}
-        >
-          <div style={Object.assign({}, styles.slide, styles.slide1)}>
-            slide n°1
-          </div>
-          <div style={Object.assign({}, styles.slide, styles.slide2)}>
-            slide n°2
-          </div>
-          <div style={Object.assign({}, styles.slide, styles.slide3)}>
-            slide n°3
-          </div>
-        </SwipeableViews>
+        <div className="aspect-ratio--object">
+          <SwipeableViews
+            enableMouseEvents={true}
+            onChangeIndex={this.handleChangeIndex}
+          >
+            <div style={Object.assign({}, styles.slide, styles.slide1)}>
+              slide n°1
+            </div>
+            <div style={Object.assign({}, styles.slide, styles.slide2)}>
+              slide n°2
+            </div>
+            <div style={Object.assign({}, styles.slide, styles.slide3)}>
+              slide n°3
+            </div>
+          </SwipeableViews>
+        </div>
       </div>
     )
   }
