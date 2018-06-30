@@ -22,52 +22,47 @@ const styles = {
 
 export default class Welcome extends Component {
   state = {
-    progress: 0,
-    percentage: 0,
-    isStopped: false,
-    isPaused: false,
-    segment: [0,10],
+    isPaused: true,
+    startPosition: 0,
+    endPosition: 21,
+    direction: 1,
   }
 
-
-  handleChangeIndex = (index) => {
-    console.log('largou')
-    // this.setState({
-    //   isPaused: false,
-    //   segment: [1, 50],
-    // })
+  componentDidMount() {
+    this.setState({ isPaused: false })
   }
 
   handleSwitching = (index, type) => {
-    console.log(index, progress)
-    const progress = Math.trunc(index * 100) % 100
-
+    if (index === 0) {
+      this.setState((state) => {
+        return {
+          startPosition: state.endPosition,
+          direction: state.endPosition < 21 ? 1 : -1,
+          endPosition: 21,
+        }
+      })
+      return
+    }
     if (index === 1) {
-      this.setState({
-        isPaused: false,
-        segment: [10, 20],
+      this.setState((state) => {
+        return {
+          startPosition: state.endPosition,
+          direction: state.endPosition < 35 ? 1 : -1,
+          endPosition: 35,
+        }
       })
       return
     }
     if (index === 2) {
-      this.setState({
-        isPaused: false,
-        segment: [20, 50],
+      this.setState((state) => {
+        return {
+          startPosition: state.endPosition,
+          direction: state.endPosition < 60 ? 1 : -1,
+          endPosition: 60,
+        }
       })
       return
     }
-
-    this.setState({
-      isPaused: true,
-      progress,
-      percentage: progress / 100,
-    })
-  }
-
-  handleChangePercentage = (e) => {
-    this.setState({
-      percentage: e.target.value,
-    })
   }
 
   render() {
@@ -87,23 +82,19 @@ export default class Welcome extends Component {
 
     return (
       <div>
-        <h1>Progress: { this.state.progress }%</h1>
-        <h1>Percentage: { this.state.percentage }%</h1>
         <div className="absolute z-999 ma7" style={ { pointerEvents: 'none' } }>
           <LottieWithAnimationControl options={defaultOptions}
             height={400}
             width={400}
-            segments={null}
-            percentage={this.state.percentage}
-            isStopped={this.state.isStopped}
+            direction={this.state.direction}
+            segments={[this.state.startPosition, this.state.endPosition]}
+            forceSegments={true}
             isPaused={this.state.isPaused}
           />
         </div>
-        <input type="range" step="0.001" max="1" min="0" defaultValue="0" value={this.state.percentage} onChange={this.handleChangePercentage} />
         <SwipeableViews
           enableMouseEvents={true}
           onSwitching={this.handleSwitching}
-          onTransitionEnd={this.handleChangeIndex}
         >
           <div style={Object.assign({}, styles.slide, styles.slide1)}>
             slide n°1
