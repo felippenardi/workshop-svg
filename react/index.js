@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SwipeableViews from 'react-swipeable-views';
 import LottieWithAnimationControl from './utils/LottieWithAnimationControl';
-import * as atmAnimation from './assets/atm-animation.json'
+import * as onboardingAnimation from './assets/onboarding-animation.json'
 
 const styles = {
   slide: {
@@ -10,13 +10,13 @@ const styles = {
     color: '#fff',
   },
   slide1: {
-    background: '#FEA900',
+    background: '#6AC0FF',
   },
   slide2: {
     background: '#B3DC4A',
   },
   slide3: {
-    background: '#6AC0FF',
+    background: '#FEA900',
   },
 };
 
@@ -24,8 +24,9 @@ export default class Welcome extends Component {
   state = {
     isPaused: true,
     startPosition: 0,
-    endPosition: 21,
+    endPosition: 30,
     direction: 1,
+    index: 0,
   }
 
   componentDidMount() {
@@ -34,9 +35,9 @@ export default class Welcome extends Component {
 
   handleChangeIndex = (index) => {
     const animationEndPositionByIndex = {
-      0: 21,
-      1: 35,
-      2: 60,
+      0: 30,
+      1: 60,
+      2: 90,
     }
 
     const goToPosition = (position) => {
@@ -45,6 +46,7 @@ export default class Welcome extends Component {
           startPosition: state.endPosition,
           direction: state.endPosition < position ? 1 : -1,
           endPosition: position,
+          index,
         }
       })
     }
@@ -63,7 +65,7 @@ export default class Welcome extends Component {
     const defaultOptions = {
       loop: false,
       autoplay: false,
-      animationData: atmAnimation,
+      animationData: onboardingAnimation,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
@@ -71,29 +73,47 @@ export default class Welcome extends Component {
 
     return (
       <div>
-        <div className="absolute z-999 ma7" style={ { pointerEvents: 'none' } }>
-          <LottieWithAnimationControl options={defaultOptions}
-            direction={this.state.direction}
-            segments={[this.state.startPosition, this.state.endPosition]}
-            forceSegments={true}
-            isPaused={this.state.isPaused}
-          />
+        <div
+          className="absolute z-999 ma7 top-2 left-0 right-0"
+          style={ { pointerEvents: 'none' } }
+        >
+          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <LottieWithAnimationControl options={defaultOptions}
+              direction={this.state.direction}
+              segments={[this.state.startPosition, this.state.endPosition]}
+              forceSegments={true}
+              isPaused={this.state.isPaused}
+            />
+          </div>
         </div>
         <div className="aspect-ratio--object">
           <SwipeableViews
             enableMouseEvents={true}
+            index={this.state.index}
             onChangeIndex={this.handleChangeIndex}
           >
             <div style={Object.assign({}, styles.slide, styles.slide1)}>
-              slide n°1
+              <div className="tc top-2 mt11 pa8 w-100">
+                <h1 className="mb0">Ilustre</h1>
+                <p className="mt0">Use o Sketch para ilustrar</p>
+              </div>
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide2)}>
-              slide n°2
+              <div className="tc top-2 mt11 pa8 w-100">
+                <h1 className="mb0">Anime</h1>
+                <p className="mt0">Use o After Effects para animar</p>
+              </div>
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              slide n°3
+              <div className="tc top-2 mt11 pa8 w-100">
+                <h1 className="mb0">Programe</h1>
+                <p className="mt0">Controle a animação no React</p>
+              </div>
             </div>
           </SwipeableViews>
+        </div>
+        <div className="absolute bottom-2 left-0 right-0 tc z-999">
+          { this.state.index }
         </div>
       </div>
     )
