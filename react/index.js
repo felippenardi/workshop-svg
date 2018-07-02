@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import SwipeableViews from 'react-swipeable-views';
-import LottieWithAnimationControl from './utils/LottieWithAnimationControl';
+import SwipeableViews from 'react-swipeable-views'
+import LottieWithAnimationControl from './utils/LottieWithAnimationControl'
 import * as onboardingAnimation from './assets/onboarding-animation.json'
+import Pagination from './components/Pagination'
 
 const styles = {
   slide: {
@@ -18,7 +19,7 @@ const styles = {
   slide3: {
     background: '#FEA900',
   },
-};
+}
 
 export default class Welcome extends Component {
   state = {
@@ -60,7 +61,7 @@ export default class Welcome extends Component {
     const buttonStyle = {
       display: 'block',
       margin: '10px auto'
-    };
+    }
 
     const defaultOptions = {
       loop: false,
@@ -69,13 +70,13 @@ export default class Welcome extends Component {
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
-    };
+    }
 
     return (
       <div>
         <div
-          className="absolute z-999 ma7 top-2 left-0 right-0"
-          style={ { pointerEvents: 'none' } }
+          className="absolute z-999 left-0 right-0"
+          style={ { pointerEvents: 'none', top: '8rem' } }
         >
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <LottieWithAnimationControl options={defaultOptions}
@@ -93,28 +94,29 @@ export default class Welcome extends Component {
             onChangeIndex={this.handleChangeIndex}
           >
             <div style={Object.assign({}, styles.slide, styles.slide1)}>
-              <div className="tc top-2 mt11 pa8 w-100">
+              <div className="tc top-2 relative w-100" style={{ top: '25rem'}}>
                 <h1 className="mb0">Ilustre</h1>
                 <p className="mt0">Use o Sketch para ilustrar</p>
               </div>
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide2)}>
-              <div className="tc top-2 mt11 pa8 w-100">
+              <div className="tc top-2 relative w-100" style={{ top: '25rem'}}>
                 <h1 className="mb0">Anime</h1>
                 <p className="mt0">Use o After Effects para animar</p>
               </div>
             </div>
             <div style={Object.assign({}, styles.slide, styles.slide3)}>
-              <div className="tc top-2 mt11 pa8 w-100">
+              <div className="tc top-2 relative w-100" style={{ top: '25rem'}}>
                 <h1 className="mb0">Programe</h1>
                 <p className="mt0">Controle a animação no React</p>
               </div>
             </div>
           </SwipeableViews>
         </div>
-        <div className="absolute bottom-2 left-0 right-0 tc z-999">
-          { this.state.index }
-        </div>
+        <Pagination
+          index={this.state.index}
+          onChangeIndex={this.handleChangeIndex}
+        />
       </div>
     )
   }
