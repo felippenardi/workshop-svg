@@ -3,6 +3,8 @@ import SwipeableViews from 'react-swipeable-views'
 import Pagination from './components/Pagination'
 import AnimationPlaceholder from './components/AnimationPlaceholder'
 import Step from './components/Step'
+import Lottie from 'react-lottie'
+import onboardingAnimation from './assets/onboarding-animation.json'
 
 export default class Welcome extends Component {
   state = {
@@ -21,7 +23,11 @@ export default class Welcome extends Component {
     return (
       <div>
         <AnimationPlaceholder>
-          <img src="http://via.placeholder.com/600x300" />
+          <Lottie
+            options={{
+              animationData: onboardingAnimation
+            }}
+          />
         </AnimationPlaceholder>
 
         <div className="aspect-ratio--object">
