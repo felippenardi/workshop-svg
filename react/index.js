@@ -29,6 +29,7 @@ export default class Welcome extends Component {
         index,
         startPosition: state.endPosition,
         endPosition: newPosition,
+        direction: state.endPosition < newPosition ? 1 : -1,
       }
     })
   }
@@ -52,6 +53,7 @@ export default class Welcome extends Component {
           <Lottie
             options={options}
             segments={[this.state.startPosition, this.state.endPosition]}
+            direction={this.state.direction}
             forceSegments={true}
             isPaused={this.state.isPaused}
           />
