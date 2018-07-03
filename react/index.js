@@ -6,16 +6,29 @@ import Step from './components/Step'
 import Lottie from './utils/LottieWithAnimationControl'
 import onboardingAnimation from './assets/onboarding-animation.json'
 
+const animationKeyframes = {
+ 0: 30,
+ 1: 60,
+ 2: 90,
+}
+
 export default class Welcome extends Component {
   state = {
     index: 0,
     isPaused: true,
+    startPosition: 0,
+    endPosition: animationKeyframes[0],
   }
 
   handleChangeIndex = (index) => {
+    const newPosition = animationKeyframes[index]
+    if (!newPosition) { return }
+
     this.setState((state) => {
       return {
         index,
+        startPosition: state.endPosition,
+        endPosition: newPosition,
       }
     })
   }
@@ -38,7 +51,7 @@ export default class Welcome extends Component {
         <AnimationPlaceholder>
           <Lottie
             options={options}
-            segments={[0, 30]}
+            segments={[this.state.startPosition, this.state.endPosition]}
             forceSegments={true}
             isPaused={this.state.isPaused}
           />
