@@ -31,16 +31,16 @@ export default class Welcome extends Component {
             onChangeIndex={this.handleChangeIndex}
           >
             <Step index={0}>
-              <h1 className="mb0">Título 1</h1>
-              <p className="mt0">Descrição 1</p>
+              <h1 className="mb0">Title 1</h1>
+              <p className="mt0">Description 1</p>
             </Step>
             <Step index={1}>
-              <h1 className="mb0">Título 2</h1>
-              <p className="mt0">Descrição 2</p>
+              <h1 className="mb0">Title 2</h1>
+              <p className="mt0">Description 2</p>
             </Step>
             <Step index={2}>
-              <h1 className="mb0">Título 3</h1>
-              <p className="mt0">Descrição 3</p>
+              <h1 className="mb0">Title 3</h1>
+              <p className="mt0">Description 3</p>
             </Step>
           </SwipeableViews>
         </div>
