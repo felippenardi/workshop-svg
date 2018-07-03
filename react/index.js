@@ -3,12 +3,13 @@ import SwipeableViews from 'react-swipeable-views'
 import Pagination from './components/Pagination'
 import AnimationPlaceholder from './components/AnimationPlaceholder'
 import Step from './components/Step'
-import Lottie from 'react-lottie'
+import Lottie from './utils/LottieWithAnimationControl'
 import onboardingAnimation from './assets/onboarding-animation.json'
 
 export default class Welcome extends Component {
   state = {
     index: 0,
+    isPaused: true,
   }
 
   handleChangeIndex = (index) => {
@@ -19,14 +20,27 @@ export default class Welcome extends Component {
     })
   }
 
+  componentDidMount() {
+    this.setState({
+      isPaused: false,
+    })
+  }
+
   render() {
+    const options = {
+      animationData: onboardingAnimation,
+      loop: false,
+      autoplay: false,
+    }
+
     return (
       <div>
         <AnimationPlaceholder>
           <Lottie
-            options={{
-              animationData: onboardingAnimation
-            }}
+            options={options}
+            segments={[0, 30]}
+            forceSegments={true}
+            isPaused={this.state.isPaused}
           />
         </AnimationPlaceholder>
 
